@@ -2940,3 +2940,130 @@ th {
     padding-top: 70px;
   }
 }
+
+/* =========================================
+   RESPONSIVE INVENTORY PAGE
+   ========================================= */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .pagehead {
+    gap: 20px;
+  }
+
+  .inventory-page-actions {
+    flex-wrap: wrap;
+  }
+
+  .inventory-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .inventory-toolbar {
+    gap: 15px;
+  }
+
+  .search-input {
+    width: 220px;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  /* Page heading */
+  .pagehead {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+
+  .pagehead h1 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .pagehead p {
+    font-size: 13px;
+  }
+
+
+  /* Action buttons */
+  .inventory-page-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .inventory-page-actions .add-item-btn,
+  .inventory-page-actions .stock-request-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+
+  /* Summary cards */
+  .inventory-summary {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .summary-card {
+    min-height: 75px;
+  }
+
+
+  /* Inventory card */
+  .inventory-card {
+    width: 100%;
+    overflow: hidden;
+  }
+
+
+  /* Toolbar */
+  .inventory-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .inventory-toolbar h2 {
+    font-size: 18px;
+  }
+
+  .inventory-toolbar p {
+    font-size: 12px;
+  }
+
+  .search-input {
+    width: 100%;
+    height: 42px;
+  }
+
+
+  /* Inventory table */
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .inventory-table {
+    min-width: 950px;
+  }
+
+
+  /* Better mobile table scrolling */
+  .inventory-table th,
+  .inventory-table td {
+    white-space: nowrap;
+  }
+
+
+  /* Action buttons inside table */
+  .inventory-table .table-action {
+    min-width: 68px;
+  }
+}
