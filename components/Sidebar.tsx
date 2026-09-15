@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+
 import {
   LayoutDashboard,
   Package,
@@ -12,10 +14,13 @@ import {
   Users,
   Settings,
   CircleCheck,
+  Menu,
+  X,
 } from "lucide-react";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const workspaceLinks = [
     {
@@ -70,138 +75,171 @@ export function Sidebar() {
     );
   }
 
+  function closeMobileMenu() {
+    setMobileOpen(false);
+  }
+
   return (
-    <aside className="sidebar">
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        type="button"
+        className="mobile-menu-button"
+        onClick={() => setMobileOpen(!mobileOpen)}
+        aria-label={
+          mobileOpen
+            ? "Close navigation"
+            : "Open navigation"
+        }
+      >
+        {mobileOpen ? (
+          <X size={22} />
+        ) : (
+          <Menu size={22} />
+        )}
+      </button>
 
-      {/* BRAND */}
+      {/* Mobile Overlay */}
+      {mobileOpen && (
+        <div
+          className="mobile-sidebar-overlay"
+          onClick={closeMobileMenu}
+        />
+      )}
 
-      <div className="sidebar-brand">
-
-        <div className="sidebar-logo-container">
-          <img
-            src="/wegrow-logo.png"
-            alt="WeGROW"
-            className="sidebar-logo"
-          />
-        </div>
-
-        <div className="sidebar-brand-name">
-          WeGROW
-        </div>
-
-        <div className="sidebar-brand-subtitle">
-          INVENTORY MANAGEMENT
-        </div>
-
-      </div>
-
-      {/* NAVIGATION */}
-
-      <div className="sidebar-content">
-
-        <div className="sidebar-menu-title">
-          WORKSPACE
-        </div>
-
-        <nav className="sidebar-menu">
-
-          {workspaceLinks.map((link) => {
-            const Icon = link.icon;
-            const active = isActive(link.href);
-
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`sidebar-link ${
-                  active ? "active" : ""
-                }`}
-              >
-                <span className="sidebar-link-icon">
-                  <Icon size={18} strokeWidth={1.9} />
-                </span>
-
-                <span className="sidebar-link-text">
-                  {link.label}
-                </span>
-
-                {active && (
-                  <span className="sidebar-active-dot" />
-                )}
-              </Link>
-            );
-          })}
-
-        </nav>
-
-        <div className="sidebar-divider" />
-
-        <div className="sidebar-menu-title">
-          ADMINISTRATION
-        </div>
-
-        <nav className="sidebar-menu">
-
-          {adminLinks.map((link) => {
-            const Icon = link.icon;
-            const active = isActive(link.href);
-
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`sidebar-link ${
-                  active ? "active" : ""
-                }`}
-              >
-                <span className="sidebar-link-icon">
-                  <Icon size={18} strokeWidth={1.9} />
-                </span>
-
-                <span className="sidebar-link-text">
-                  {link.label}
-                </span>
-
-                {active && (
-                  <span className="sidebar-active-dot" />
-                )}
-              </Link>
-            );
-          })}
-
-        </nav>
-
-      </div>
-
-      {/* BOTTOM */}
-
-      <div className="sidebar-bottom">
-
-        <div className="sidebar-role-box">
-
-          <div className="sidebar-role-label">
-            CURRENT ROLE
+      {/* Sidebar */}
+      <aside
+        className={`sidebar ${
+          mobileOpen ? "mobile-open" : ""
+        }`}
+      >
+        {/* BRAND */}
+        <div className="sidebar-brand">
+          <div className="sidebar-logo-container">
+            <img
+              src="/wegrow-logo.png"
+              alt="WeGROW"
+              className="sidebar-logo"
+            />
           </div>
 
-          <select className="sidebar-role-select">
-            <option>System Administrator</option>
-            <option>Department Manager</option>
-            <option>Procurement Officer</option>
-            <option>Storeroom Officer</option>
-          </select>
+          <div className="sidebar-brand-name">
+            WeGROW
+          </div>
 
+          <div className="sidebar-brand-subtitle">
+            INVENTORY MANAGEMENT
+          </div>
         </div>
 
-        <div className="sidebar-status">
+        {/* NAVIGATION */}
+        <div className="sidebar-content">
+          <div className="sidebar-menu-title">
+            WORKSPACE
+          </div>
 
-          <CircleCheck size={14} />
+          <nav className="sidebar-menu">
+            {workspaceLinks.map((link) => {
+              const Icon = link.icon;
+              const active = isActive(link.href);
 
-          <span>System Online</span>
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`sidebar-link ${
+                    active ? "active" : ""
+                  }`}
+                  onClick={closeMobileMenu}
+                >
+                  <span className="sidebar-link-icon">
+                    <Icon
+                      size={18}
+                      strokeWidth={1.9}
+                    />
+                  </span>
 
+                  <span className="sidebar-link-text">
+                    {link.label}
+                  </span>
+
+                  {active && (
+                    <span className="sidebar-active-dot" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="sidebar-divider" />
+
+          <div className="sidebar-menu-title">
+            ADMINISTRATION
+          </div>
+
+          <nav className="sidebar-menu">
+            {adminLinks.map((link) => {
+              const Icon = link.icon;
+              const active = isActive(link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`sidebar-link ${
+                    active ? "active" : ""
+                  }`}
+                  onClick={closeMobileMenu}
+                >
+                  <span className="sidebar-link-icon">
+                    <Icon
+                      size={18}
+                      strokeWidth={1.9}
+                    />
+                  </span>
+
+                  <span className="sidebar-link-text">
+                    {link.label}
+                  </span>
+
+                  {active && (
+                    <span className="sidebar-active-dot" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-      </div>
+        {/* BOTTOM */}
+        <div className="sidebar-bottom">
+          <div className="sidebar-role-box">
+            <div className="sidebar-role-label">
+              CURRENT ROLE
+            </div>
 
-    </aside>
+            <select className="sidebar-role-select">
+              <option>
+                System Administrator
+              </option>
+              <option>
+                Department Manager
+              </option>
+              <option>
+                Procurement Officer
+              </option>
+              <option>
+                Storeroom Officer
+              </option>
+            </select>
+          </div>
+
+          <div className="sidebar-status">
+            <CircleCheck size={14} />
+            <span>System Online</span>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }
