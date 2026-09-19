@@ -93,6 +93,32 @@ export default async function DepartmentInventory({ params }: Props) {
     .order("name");
 
 
+    const { data: requestItems, error: requestItemsError } =
+  await supabase
+    .from("inventory_items")
+    .select(`
+      id,
+      name,
+      item_code,
+      category,
+      description,
+      quantity,
+      unit_id,
+      minimum_level,
+      reorder_level,
+      maximum_level,
+      supplier,
+      location,
+      department_id,
+      units_of_measure (
+        name,
+        abbreviation
+      )
+    `)
+    .eq("is_active", true)
+    .order("name");
+
+
   return (
     <Page title={department.name}>
       <div className="pagehead">
@@ -117,7 +143,7 @@ export default async function DepartmentInventory({ params }: Props) {
 
   <StockRequestForm
     departmentId={department.id}
-    items={items ?? []}
+    items={requestItems ?? []}
     units={units ?? []}
   />
 </div>
