@@ -16,6 +16,7 @@ import {
 import { supabase } from "@/lib/supabase";
 import { Page } from "@/components/Page";
 import RequestDecision from "./RequestDecision";
+import PurchaseOrderButton from "./PurchaseOrderButton";
 
 type Props = {
   params: {
@@ -142,6 +143,13 @@ export default async function StockRequestReviewPage({
   const canPartiallySupply =
     availableQuantity > 0 &&
     availableQuantity < requestedQuantity;
+
+    const canCreatePurchaseOrder =
+  !canFullySupply &&
+  (
+    request.status === "Partially Issued" ||
+    (request.status === "Approved" && availableQuantity <= 0)
+  );
 
   /* =========================================
      STATUS HELPERS
@@ -594,7 +602,26 @@ export default async function StockRequestReviewPage({
           currentStatus={request.status}
           canFullySupply={canFullySupply}
           canPartiallySupply={canPartiallySupply}
+        />
+
+        {canCreatePurchaseOrder && (
+         <PurchaseOrderButton
+           requestId={request.id}
+           requestNumber={request.request_number}
+           requestingDepartmentId={request.requesting_department_id}
+           itemId={request.requested_item_id}
+           itemName={item?.name || ""}
+           quantityToPurchase={
+           Number(request.quantity_requested) -
+           Number(request.quantity_issued)
+        }
+        unitId={request.unit_id}
+        unitAbbreviation={unit?.abbreviation || ""}
+        reason={request.reason}
        />
+     )}
+
+  
 
       </div>
 

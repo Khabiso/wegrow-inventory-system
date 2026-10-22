@@ -42,6 +42,31 @@ export default async function Movements() {
     );
   }
 
+  /*
+   * Get PO numbers from the movements.
+   * Supplier receipts use the PO number as reference_number.
+   */
+  const poNumbers =
+    movements
+      ?.map((movement) => movement.reference_number)
+      .filter(Boolean) || [];
+
+  let supplierMap: Record<string, string> = {};
+
+  if (poNumbers.length > 0) {
+    const { data: purchaseOrders } = await supabase
+      .from("purchase_orders")
+      .select(`
+        po_number,
+        supplier
+      `)
+      .in("po_number", poNumbers);
+
+    purchaseOrders?.forEach((po) => {
+      supplierMap[po.po_number] = po.supplier || "Supplier";
+    });
+  }
+
   return (
     <Page title="Stock Movements">
       <div className="pagehead">
@@ -106,6 +131,17 @@ export default async function Movements() {
                     ? item.units_of_measure[0]
                     : item?.units_of_measure;
 
+                  /*
+                   * For supplier receipts:
+                   * from_department_id is NULL,
+                   * so we use the supplier linked to the PO.
+                   */
+                  const supplier =
+                    movement.movement_type === "Receive" &&
+                    movement.reference_number
+                      ? supplierMap[movement.reference_number]
+                      : null;
+
                   return (
                     <tr key={movement.id}>
                       <td>
@@ -131,7 +167,9 @@ export default async function Movements() {
                       </td>
 
                       <td>
-                        {fromDepartment?.name || "—"}
+                        {supplier ||
+                          fromDepartment?.name ||
+                          "—"}
                       </td>
 
                       <td>
