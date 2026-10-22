@@ -21,7 +21,7 @@
       ]
     },
 
-    "ignoreDeprecations": "6.0",
+    
     "allowJs": true,
     "skipLibCheck": true,
     "incremental": true,
