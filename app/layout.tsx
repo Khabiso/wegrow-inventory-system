@@ -1,3 +1,5 @@
+
+import Footer from "@/components/Footer";
 import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
 
@@ -12,10 +14,29 @@ export default function Layout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <div className="app">
-          <Sidebar />
-          <main className="main">{children}</main>
+      <body style={{ margin: 0 }}>
+        <Sidebar />
+
+        <div
+          className="main-layout"
+          style={{
+            marginLeft: "245px",
+            width: "calc(100% - 245px)",
+            boxSizing: "border-box",
+          }}
+        >
+          <main
+          className="main"
+          style={{
+          marginLeft: 0,
+          minWidth: 0,
+          paddingBottom: "60px",
+        }}
+        >
+        {children}
+          </main>
+
+          <Footer />
         </div>
       </body>
     </html>

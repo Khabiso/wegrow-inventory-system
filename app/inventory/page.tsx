@@ -1,4 +1,347 @@
+
 import Link from "next/link";
+import {
+  Zap,
+  Wrench,
+  Leaf,
+  ShieldCheck,
+  HardHat,
+  Sprout,
+  Warehouse,
+  Bug,
+  Laptop,
+  Users,
+  Droplets,
+  ShoppingCart,
+  ArrowUpRight,
+  Boxes,
+} from "lucide-react";
+
+import { supabase } from "@/lib/supabase";
+import { Page } from "@/components/Page";
+
+const departmentIcons: Record<
+  string,
+  {
+    icon: React.ElementType;
+    color: string;
+    background: string;
+  }
+> = {
+  Electrical: { icon: Zap, color: "#D97706", background: "#FEF3C7" },
+  "Storeroom / Maintenance": { icon: Wrench, color: "#475569", background: "#F1F5F9" },
+  "Post Harvest": { icon: Leaf, color: "#15803D", background: "#DCFCE7" },
+  "Quality Assurance": { icon: ShieldCheck, color: "#2563EB", background: "#DBEAFE" },
+  "Health and Safety": { icon: HardHat, color: "#B45309", background: "#FEF3C7" },
+  "Soil Preparation": { icon: Sprout, color: "#15803D", background: "#DCFCE7" },
+  Greenhouses: { icon: Warehouse, color: "#0F766E", background: "#CCFBF1" },
+  IPM: { icon: Bug, color: "#7C3AED", background: "#EDE9FE" },
+  IT: { icon: Laptop, color: "#2563EB", background: "#DBEAFE" },
+  "Mother Plant": { icon: Sprout, color: "#16A34A", background: "#DCFCE7" },
+  HR: { icon: Users, color: "#9333EA", background: "#F3E8FF" },
+  "Irrigation & Nutrients": { icon: Droplets, color: "#0284C7", background: "#E0F2FE" },
+  Procurement: { icon: ShoppingCart, color: "#0F766E", background: "#CCFBF1" },
+};
+
+export default async function InventoryPage() {
+  const { data: departments, error } = await supabase
+    .from("departments")
+    .select("id, name, description")
+    .eq("is_active", true)
+    .order("name");
+
+  if (error) {
+    return (
+      <Page title="Inventory">
+        <div style={{
+          padding: 30,
+          background: "#FFFFFF",
+          border: "1px solid #E5EAE7",
+          borderRadius: 12,
+        }}>
+          <h2 style={{ color: "#172B25", marginTop: 0 }}>
+            Unable to load departments
+          </h2>
+          <p style={{ color: "#64748B" }}>{error.message}</p>
+        </div>
+      </Page>
+    );
+  }
+
+  return (
+    <Page title="Inventory">
+      <main style={{
+        width: "100%",
+        maxWidth: 1500,
+        margin: "0 auto",
+        paddingBottom: 30,
+      }}>
+
+        {/* Page heading */}
+        <section style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 24,
+          padding: "30px 34px",
+          background: "#102B25",
+          color: "#FFFFFF",
+          borderRadius: 14,
+          marginBottom: 22,
+        }}>
+          <div>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              color: "#A7D8B5",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: 1.2,
+              marginBottom: 12,
+            }}>
+              <Boxes size={15} />
+              INVENTORY MANAGEMENT
+            </div>
+
+            <h1 style={{
+              margin: "0 0 9px",
+              fontSize: 27,
+              fontWeight: 700,
+              color: "#FFFFFF",
+            }}>
+              Department Inventories
+            </h1>
+
+            <p style={{
+              margin: 0,
+              maxWidth: 600,
+              color: "#D1DDD7",
+              fontSize: 14,
+              lineHeight: 1.6,
+            }}>
+              Manage, monitor and access inventory across your
+              departments from one central location.
+            </p>
+          </div>
+
+          <div style={{
+            width: 86,
+            height: 86,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            borderRadius: 18,
+            background: "rgba(255,255,255,0.09)",
+            color: "#A7D8B5",
+          }}>
+            <Warehouse size={46} strokeWidth={1.5} />
+          </div>
+        </section>
+
+        {/* Department overview */}
+        <section style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 15,
+          padding: "19px 22px",
+          background: "#FFFFFF",
+          border: "1px solid #E5EAE7",
+          borderRadius: 12,
+          marginBottom: 32,
+        }}>
+          <div style={{
+            width: 46,
+            height: 46,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 11,
+            background: "#E8F3EC",
+            color: "#176B45",
+          }}>
+            <Boxes size={23} />
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <span style={{ color: "#64748B", fontSize: 12 }}>
+              Active Departments
+            </span>
+            <strong style={{
+              color: "#142D25",
+              fontSize: 23,
+              lineHeight: 1,
+            }}>
+              {departments?.length ?? 0}
+            </strong>
+          </div>
+
+          <p style={{
+            margin: "0 0 0 auto",
+            color: "#64748B",
+            fontSize: 13,
+          }}>
+            Select a department below to access its inventory.
+          </p>
+        </section>
+
+        {/* Department cards heading */}
+        <section>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 15,
+            marginBottom: 18,
+          }}>
+            <div>
+              <h2 style={{
+                margin: "0 0 5px",
+                color: "#172B25",
+                fontSize: 19,
+                fontWeight: 700,
+              }}>
+                All Departments
+              </h2>
+              <p style={{
+                margin: 0,
+                color: "#718078",
+                fontSize: 13,
+              }}>
+                Choose a department to view its inventory.
+              </p>
+            </div>
+
+            <span style={{
+              padding: "7px 12px",
+              borderRadius: 20,
+              background: "#EAF3ED",
+              color: "#176B45",
+              fontSize: 12,
+              fontWeight: 600,
+              whiteSpace: "nowrap",
+            }}>
+              {departments?.length ?? 0} Departments
+            </span>
+          </div>
+
+          {/* Department grid */}
+          {departments && departments.length > 0 ? (
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
+              gap: 17,
+            }}>
+              {departments.map((department) => {
+                const config = departmentIcons[department.name] ?? {
+                  icon: Warehouse,
+                  color: "#475569",
+                  background: "#F1F5F9",
+                };
+
+                const Icon = config.icon;
+
+                return (
+                  <Link
+                    key={department.id}
+                    href={`/inventory/${department.id}`}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      minWidth: 0,
+                      minHeight: 190,
+                      padding: 21,
+                      background: "#FFFFFF",
+                      border: "1px solid #E5EAE7",
+                      borderRadius: 12,
+                      textDecoration: "none",
+                      color: "inherit",
+                      transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+                    }}
+                  >
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 47,
+                      height: 47,
+                      borderRadius: 11,
+                      marginBottom: 17,
+                      color: config.color,
+                      backgroundColor: config.background,
+                    }}>
+                      <Icon size={25} strokeWidth={2} />
+                    </div>
+
+                    <div style={{ flex: 1 }}>
+                      <h3 style={{
+                        margin: "0 0 7px",
+                        color: "#1B3028",
+                        fontSize: 15,
+                        fontWeight: 700,
+                      }}>
+                        {department.name}
+                      </h3>
+
+                      <p style={{
+                        margin: 0,
+                        color: "#718078",
+                        fontSize: 12.5,
+                        lineHeight: 1.6,
+                      }}>
+                        {department.description ||
+                          "Access and manage department inventory."}
+                      </p>
+                    </div>
+
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 10,
+                      paddingTop: 16,
+                      marginTop: 17,
+                      borderTop: "1px solid #F0F2F0",
+                      color: "#176B45",
+                      fontSize: 12,
+                      fontWeight: 600,
+                    }}>
+                      <span>View inventory</span>
+                      <ArrowUpRight size={18} />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div style={{
+              padding: "45px 20px",
+              textAlign: "center",
+              background: "#FFFFFF",
+              border: "1px solid #E5EAE7",
+              borderRadius: 12,
+              color: "#64748B",
+            }}>
+              <Warehouse size={34} color="#176B45" />
+              <h3 style={{ color: "#172B25", fontSize: 17 }}>
+                No active departments found
+              </h3>
+              <p style={{ fontSize: 13 }}>
+                Active departments will appear here once they have
+                been added to the system.
+              </p>
+            </div>
+          )}
+        </section>
+      </main>
+    </Page>
+  );
+}
+
+
+
+/*import Link from "next/link";
 import {
   Zap,
   Wrench,
@@ -156,199 +499,6 @@ export default async function InventoryPage() {
             </Link>
           );
         })}
-      </div>
-    </Page>
-  );
-}
-
-
-
-/*import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-import { Page } from "@/components/Page";
-
-export default async function InventoryPage() {
-  const { data: departments, error } = await supabase
-    .from("departments")
-    .select("id, name, description")
-    .eq("is_active", true)
-    .order("name");
-
-  if (error) {
-    return (
-      <Page title="Inventory">
-        <div className="card">
-          <h2>Unable to load departments</h2>
-          <p>{error.message}</p>
-        </div>
-      </Page>
-    );
-  }
-
-  return (
-    <Page title="Inventory">
-      <div className="pagehead">
-        <div>
-          <h1>Department Inventories</h1>
-          <p>
-            Select a department to view and manage its inventory.
-          </p>
-        </div>
-      </div>
-
-      <div className="department-grid">
-        {departments?.map((department) => (
-          <Link
-            key={department.id}
-            href={`/inventory/${department.id}`}
-            className="department-card"
-          >
-            <div className="department-icon">📦</div>
-
-            <div>
-              <h3>{department.name}</h3>
-
-              <p>
-                {department.description ||
-                  "View department inventory"}
-              </p>
-            </div>
-
-            <span className="department-arrow">→</span>
-          </Link>
-        ))}
-      </div>
-    </Page>
-  );
-}
-*/
-
-/*import { supabase } from "@/lib/supabase";
-
-export default async function InventoryPage() {
-  const { data, error } = await supabase
-    .from("inventory_items")
-    .select(`
-      id,
-      name,
-      item_code,
-      category,
-      quantity,
-      minimum_level,
-      reorder_level,
-      departments (
-        name
-      ),
-      units_of_measure (
-        name,
-        abbreviation
-      )
-    `)
-    .order("name");
-
-  if (error) {
-    return (
-      <div style={{ padding: "40px" }}>
-        <h1>Inventory</h1>
-        <p>Unable to load inventory.</p>
-        <pre>{error.message}</pre>
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ padding: "40px" }}>
-      <h1>Inventory</h1>
-
-      <p>
-        Total items: <strong>{data?.length ?? 0}</strong>
-      </p>
-
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          marginTop: "30px",
-        }}
-      >
-        <thead>
-          <tr>
-            <th align="left">Item</th>
-            <th align="left">Code</th>
-            <th align="left">Department</th>
-            <th align="left">Quantity</th>
-            <th align="left">Minimum</th>
-            <th align="left">Reorder</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {data?.map((item) => {
-            const department = Array.isArray(item.departments)
-              ? item.departments[0]
-              : item.departments;
-
-            const unit = Array.isArray(item.units_of_measure)
-              ? item.units_of_measure[0]
-              : item.units_of_measure;
-
-            return (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.item_code}</td>
-                <td>{department?.name}</td>
-                <td>
-                  {item.quantity} {unit?.abbreviation}
-                </td>
-                <td>{item.minimum_level}</td>
-                <td>{item.reorder_level}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-*/
-
-
-
-/*import Link from "next/link";
-import { Page } from "@/components/Page";
-import { departments } from "@/lib/data";
-
-export default function Inventory() {
-  return (
-    <Page title="Inventory">
-      <div className="pagehead">
-        <div>
-          <h1>Department Inventories</h1>
-          <p>Every department has its own inventory.</p>
-        </div>
-
-        <button className="primary">
-          + Add Inventory Item
-        </button>
-      </div>
-
-      <div className="deptgrid">
-        {departments.map((d) => (
-          <Link
-            href={`/inventory/${d[0]}`}
-            className="dept card"
-            key={d[0]}
-          >
-            <div className="depticon">{d[1]}</div>
-
-            <h3>{d[2]}</h3>
-
-            <p>{d[3]} inventory records</p>
-
-            <span>View inventory →</span>
-          </Link>
-        ))}
       </div>
     </Page>
   );

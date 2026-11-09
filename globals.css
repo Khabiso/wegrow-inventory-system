@@ -2947,11 +2947,11 @@ th {
   align-items: center !important;
   justify-content: center !important;
 
+  box-sizing: border-box !important;
+
   height: 36px !important;
   min-width: 36px !important;
   padding: 0 12px !important;
-
-  box-sizing: border-box !important;
 
   border: 1px solid #d6dfda !important;
   border-radius: 7px !important;
@@ -2962,8 +2962,9 @@ th {
   font-family: Arial, Helvetica, sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
-
   line-height: 1 !important;
+
+  text-decoration: none !important;
   cursor: pointer !important;
 
   transition:
@@ -2973,10 +2974,11 @@ th {
     box-shadow 0.15s ease !important;
 }
 
-.po-pagination-button:hover:not(:disabled),
+.po-pagination-button:hover,
 .po-pagination-page:hover {
   background: #f1f6f3 !important;
   border-color: #bfcfc7 !important;
+  color: #087f5b !important;
 }
 
 .po-pagination-page.active {
@@ -2986,12 +2988,10 @@ th {
   box-shadow: 0 2px 5px rgba(8, 127, 91, 0.15) !important;
 }
 
-.po-pagination-button:disabled {
-  background: #f5f7f6 !important;
-  border-color: #e1e7e3 !important;
-  color: #a2aaa5 !important;
-  cursor: not-allowed !important;
-  box-shadow: none !important;
+.po-pagination-page.active:hover {
+  background: #066b4c !important;
+  border-color: #066b4c !important;
+  color: #ffffff !important;
 }
 
 @media (max-width: 600px) {
@@ -2999,3 +2999,135 @@ th {
     flex-wrap: wrap;
   }
 }
+
+
+/* ========================================
+   WeGrow Corporate Footer
+======================================== */
+
+.wegrow-footer {
+  width: 100%;
+  margin-top: auto;
+  background: #ffffff;
+  border-top: 1px solid #dfe8e2;
+  box-sizing: border-box;
+}
+
+.wegrow-footer-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 30px 20px;
+  box-sizing: border-box;
+}
+
+.wegrow-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.wegrow-footer-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #087f5b, #064e3b);
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  box-shadow: 0 4px 10px rgba(8, 127, 91, 0.16);
+}
+
+.wegrow-footer-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wegrow-footer-brand-text strong {
+  color: #17211c;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.wegrow-footer-brand-text span {
+  color: #78847d;
+  font-size: 11px;
+}
+
+.wegrow-footer-divider {
+  width: 100%;
+  height: 1px;
+  background: #edf1ee;
+}
+
+.wegrow-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 18px;
+}
+
+.wegrow-footer-bottom p {
+  margin: 0;
+  color: #78847d;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.wegrow-footer-bottom p strong {
+  color: #34423a;
+  font-weight: 700;
+}
+
+.wegrow-footer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #68756e;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.wegrow-footer-status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #087f5b;
+  box-shadow: 0 0 0 3px rgba(8, 127, 91, 0.09);
+}
+
+@media (max-width: 600px) {
+  .wegrow-footer-inner {
+    padding: 20px 18px;
+  }
+
+  .wegrow-footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 750px) {
+  footer {
+    left: 68px !important;
+    width: calc(100% - 68px) !important;
+  }
+}
+/*
+
+here!!!
+
+*/
+
+
+

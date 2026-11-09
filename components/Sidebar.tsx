@@ -34,8 +34,8 @@ export function Sidebar() {
       icon: Package,
     },
     {
-      label: "Procurement",
-      href: "/procurement",
+      label: "Stock Requests",
+      href: "/stock-requests",
       icon: ShoppingCart,
     },
     {
@@ -114,23 +114,81 @@ export function Sidebar() {
         }`}
       >
         {/* BRAND */}
-        <div className="sidebar-brand">
-          <div className="sidebar-logo-container">
-            <img
-              src="/wegrow-logo.png"
-              alt="WeGROW"
-              className="sidebar-logo"
-            />
-          </div>
+      
+{/* BRAND */}
+<div
+  className="sidebar-brand"
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    padding: "20px 10px",
+    boxSizing: "border-box",
+    textAlign: "center",
+    overflow: "hidden",
+  }}
+>
+  <div
+    className="sidebar-logo-container"
+    style={{
+      width: "min(140px, 100%)",
+      height: "96px",
+      padding: "8px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#ffffff",
+      borderRadius: "12px",
+      overflow: "hidden",
+      boxSizing: "border-box",
+      flexShrink: 0,
+    }}
+  >
+    <img
+      src="/wegrow-logo.png"
+      alt="WeGROW"
+      className="sidebar-logo"
+      style={{
+        display: "block",
+        width: "100%",
+        height: "100%",
+        maxWidth: "100%",
+        maxHeight: "100%",
+        objectFit: "contain",
+      }}
+    />
+  </div>
 
-          <div className="sidebar-brand-name">
-            WeGROW
-          </div>
+  <div
+    className="sidebar-brand-name"
+    style={{
+      marginTop: "10px",
+      color: "#ffffff",
+      fontSize: "17px",
+      fontWeight: 800,
+      lineHeight: 1.3,
+    }}
+  >
+    WeGROW
+  </div>
 
-          <div className="sidebar-brand-subtitle">
-            INVENTORY MANAGEMENT
-          </div>
-        </div>
+  <div
+    className="sidebar-brand-subtitle"
+    style={{
+      marginTop: "5px",
+      color: "#72c99b",
+      fontSize: "9px",
+      fontWeight: 800,
+      letterSpacing: "1px",
+      lineHeight: 1.4,
+    }}
+  >
+    INVENTORY MANAGEMENT
+  </div>
+</div>
+
 
         {/* NAVIGATION */}
         <div className="sidebar-content">
