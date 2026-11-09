@@ -581,7 +581,7 @@ export default async function StockRequestsPage({
                             <span style={{ color: "#64748b" }}>
                               {unit?.abbreviation || ""}
                             </span>
-                            {request.quantity_issued > 0 && (
+                            {(request.quantity_issued ?? 0) > 0 && (
                               <small style={{
                                 display: "block",
                                 marginTop: "4px",
