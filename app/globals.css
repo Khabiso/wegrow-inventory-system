@@ -6212,3 +6212,10 @@ th {
     width: 100%;
   }
 }
+
+/* Hide footer on mobile phones */
+@media (max-width: 600px) {
+  .app-footer {
+    display: none !important;
+  }
+}

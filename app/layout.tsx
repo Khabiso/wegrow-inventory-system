@@ -33,7 +33,7 @@ export default function Layout({
               minWidth: 0,
               width: "100%",
               flex: 1,
-              paddingBottom: "60px",
+              paddingBottom: "20px",
               boxSizing: "border-box",
             }}
           >
